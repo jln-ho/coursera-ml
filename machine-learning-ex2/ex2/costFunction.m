@@ -31,7 +31,7 @@ for i = 1:m
 end
 J = 1/m * sum(estimates);
 
-for j = 1:3
+for j = 1:size(grad,1)
 	estimates = y;
 	for i = 1:m
 		h = sigmoid(theta' * X(i,:)');
