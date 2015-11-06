@@ -24,22 +24,28 @@ grad = zeros(size(theta));
 % x_i = X(1,:)';
 % sigmoid(theta' * x_i)
 
-estimates = y;
-for i = 1:m
-	h = sigmoid(theta' * X(i,:)');
-	estimates(i) = -y(i) * log(h) - (1 - y(i)) * log(1 - h);
-end
-J = 1/m * sum(estimates);
+%{estimates = y;
+%or i = 1:m
+%	h = sigmoid(theta' * X(i,:)');
+%	estimates(i) = -y(i) * log(h) - (1 - y(i)) * log(1 - h);
+%end
+%J = 1/m * sum(estimates);
+%
+%for j = 1:size(grad,1)
+%	estimates = y;
+%	for i = 1:m
+%		h = sigmoid(theta' * X(i,:)');
+%		estimates(i) = (h - y(i)) * X(i,j);
+%	end
+%	grad(j) = 1/m * sum(estimates);
+%end
 
-for j = 1:size(grad,1)
-	estimates = y;
-	for i = 1:m
-		h = sigmoid(theta' * X(i,:)');
-		estimates(i) = (h - y(i)) * X(i,j);
-	end
-	grad(j) = 1/m * sum(estimates);
-end
+left = -1 * (y .* log(sigmoid(X * theta)));
+right = (1 - y) .* log(1 - sigmoid(X * theta));
 
+J = (1/m) * sum(left - right);
+
+grad = (X' * (sigmoid(X * theta) - y)) * (1/m);
 
 
 
